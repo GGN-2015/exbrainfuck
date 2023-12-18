@@ -1,6 +1,7 @@
 # optimized brainfuck interpreter
 import sys
 import json
+from bfc import BrainfuckCompiler
 
 
 
@@ -12,8 +13,11 @@ def error_log(msg, ret): # output fatal error log
 
 class BrainfuckInterpreter:
     def __get_file(self, filename: str) -> str: # get all content in a file
-        f = open(filename, "r", encoding="utf-8")
-        return f.read()
+        if filename[-5:] == ".exbf":
+            return BrainfuckCompiler(filename).get() # just run exbf in string
+        else:
+            f = open(filename, "r", encoding="utf-8")
+            return f.read()
 
     def __check_same_type(self, ope1: str, ope2: str) -> bool:
         for ope_set in [set(["+", "-"]), set(["<", ">"])]:
