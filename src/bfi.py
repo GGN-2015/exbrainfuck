@@ -2,12 +2,7 @@
 import sys
 import json
 from bfc import BrainfuckCompiler
-
-
-
-def error_log(msg, ret): # output fatal error log
-    sys.stderr.write("%s\n" % msg)
-    exit(ret)
+import colors
 
 
 
@@ -67,19 +62,19 @@ class BrainfuckInterpreter:
 
             if optimized_code[i] == ']': # there must be match in stack
                 if len(stack) == 0:
-                    error_log("error: ']' not match with '['.", 1)
+                    colors.error_log("error: ']' not match with '['.", 1)
 
                 *stack, top = stack # delete stack top, and then match them
                 match_position[top] = i
                 match_position[i  ] = top
         
         if len(stack) != 0:
-            error_log("error: '[' is more than ']'.", 1)
+            colors.error_log("error: '[' is more than ']'.", 1)
         return match_position
 
     def __touch_memoty(self, pos: int) -> None:
         if pos < 0:
-            error_log("runtime error: access memory position %d." % pos, 1)
+            colors.error_log("runtime error: access memory position %d." % pos, 1)
         
         if self.memory.get(pos) is None: # auto initialize to zero
             self.memory[pos] = 0
@@ -157,8 +152,11 @@ class BrainfuckInterpreter:
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        error_log("usage: python3 \"%s\" <file.bf>" % sys.argv[0], 1)
+        colors.error_log("usage: python3 \"%s\" <file.bf>" % sys.argv[0], 1)
 
     file_bf               = str(sys.argv[1])
     brainfuck_interpreter = BrainfuckInterpreter(file_bf)
     final_memory, ptr     = brainfuck_interpreter.run()
+
+    colors.info_log("done.")
+    colors.info_log("%s ptr = %d" % (str(final_memory), ptr))

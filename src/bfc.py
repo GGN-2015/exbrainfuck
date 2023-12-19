@@ -1,11 +1,6 @@
 import os
 import sys
-
-
-
-def error_log(msg, ret): # die and log on the stderr
-    sys.stderr.write("%s\n" % msg)
-    exit(ret)
+import colors
 
 
 
@@ -68,7 +63,7 @@ class BrainfuckCompiler:
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        error_log("usage: python3 \"%s\" <file.exbf>" % sys.argv[0], 1)
+        colors.error_log("usage: python3 \"%s\" <file.exbf>" % sys.argv[0], 1)
 
     filename = sys.argv[1]
     if filename[-3:] == '.bf': # do not compile `.bf` file
