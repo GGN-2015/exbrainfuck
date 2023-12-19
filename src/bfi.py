@@ -101,10 +101,13 @@ class BrainfuckInterpreter:
         self.__touch_memoty(self.pointer)
         return self.memory[self.pointer]
 
+    def __deep_copy(self, dic: dict): # deep copy a dict, json.loads(json.dumps(...)) NOT available
+        return {x: dic[x] for x in dic}
+
     def run(self):
         self.program_pos = 0
         self.pointer     = 0
-        self.memory      = json.loads(json.dumps(self.initial_memory)) # depp copy
+        self.memory      = self.__deep_copy(self.initial_memory) # deep copy
         while True:
             if self.program_pos >= len(self.optimized_code): # normally terminated
                 return (self.memory, self.pointer)
@@ -151,11 +154,23 @@ class BrainfuckInterpreter:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
+    argv_list = json.loads(json.dumps(sys.argv))
+    if len(argv_list) not in [2, 3]:
         colors.error_log("usage: python3 \"%s\" <file.bf>" % sys.argv[0], 1)
+        colors.error_log("usage: python3 \"%s\" <file.bf> \"[initialized_memory]\" " % sys.argv[0], 1)
 
-    file_bf               = str(sys.argv[1])
-    brainfuck_interpreter = BrainfuckInterpreter(file_bf)
+    # get initialized_memory
+    if len(argv_list) == 3:
+        initialized_memory = eval(argv_list[2])
+        colors.info_log(initialized_memory)
+
+        if not isinstance(initialized_memory, dict):
+            colors.error_log("error: initialized_memory should be dict type.", 1)
+    else:
+        initialized_memory = {}
+
+    file_bf               = str(argv_list[1])
+    brainfuck_interpreter = BrainfuckInterpreter(file_bf, initial_memory=initialized_memory)
     final_memory, ptr     = brainfuck_interpreter.run()
 
     colors.info_log("done.")

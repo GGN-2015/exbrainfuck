@@ -1,0 +1,27 @@
+RSH
+RSH
+#USE clr.bf
+RSH
+#USE clr.bf
+LSH
+LSH
+LSH
+REP
+    SUB
+    RSH
+    #USE copy.bf
+    LSH
+END
+RSH
+#USE clr.bf
+RSH
+REP
+    SUB
+    LSH
+    LSH
+    ADD
+    RSH
+    RSH
+END
+LSH
+LSH
