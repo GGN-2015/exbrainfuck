@@ -20,11 +20,23 @@ We promise that any complete program must guarantee the preservation of the poin
 > >
 > > {a, 0, *} => {a, a, 0}
 
+## eq.exbf
+
+> {a, b, \*, \*} => {[a == b], 0, 0, 0}
+
+`eq.exbf` uses subroutine `sub.bf` and `eq0.bf`.
+
 ## eq0.bf
 
 > {a, \*, \*, \*} => {[a==0], 0, 0, 0}
 
 **Regarding the notation interpretation:** The value of `[S]` is `1` if the condition specified by `S` is true; otherwise, it is `0`.
+
+## leq.exbf
+
+> {a, b, \*, \*, \*, \*, \*} => {[a <= b], 0, 0, 0, 0, 0, 0}
+
+`leq.exbf` uses subroutine `eq0.bf`, `or.exbf` and `not.exbf`. This is a GREAT program which puts forward a method like WHILE loop.
 
 ## mul.exbf
 
@@ -32,13 +44,27 @@ We promise that any complete program must guarantee the preservation of the poin
 
 `mul.exbf` uses subroutine `clr.bf` and `copy.bf`.
 
+## neq.exbf
+
+> {a, b, \*, \*} => {[a != b], 0, 0, 0}
+
+`neq.exbf` uses subroutine `eq.exbf` and `not.exbf`.
+
 ## not.exbf
 
 > {a, \*, \*, \*} => {!a, 0, 0, 0}
 
 **Regarding the notation interpretation:** `!a` is similar to the logical NOT operator in the C language. If the value of a is not zero, `!a` will be equal to `0`. Otherwise, `!a` will be equal to `1`.
 
-`not.exbf` use `eq0.bf` as its directly implementation.
+`not.exbf` uses `eq0.bf` as its directly implementation.
+
+## or.exbf
+
+> {a, b, \*, \*} => {[a || b], 0, 0, 0}
+>
+> `a` and `b` should be `0` or `1` before calling subroutine `or.exbf`.
+
+`or.exbf` uses subroutine `add.bf`, `eq0.bf` and `not.exbf`.
 
 ## sub.bf
 

@@ -1,0 +1,36 @@
+#RAW >>[-]
+#RAW >[-]>[-]>[-]>[-]<<<<
+
+#RAW <<
+#RAW [->>+>+<<<]
+#RAW >>>[-<<<+>>>]<<<
+#RAW >>
+#USE eq0.bf
+#RAW <
+#RAW [->>+>+<<<]
+#RAW >>>[-<<<+>>>]<<<
+#RAW >>
+#USE eq0.bf
+#RAW <
+#USE or.exbf
+#USE not.exbf
+
+REP
+    #RAW <-<->>[-]
+
+    #RAW <<
+    #RAW [->>+>+<<<]
+    #RAW >>>[-<<<+>>>]<<<
+    #RAW >>
+    #USE eq0.bf
+    #RAW <
+    #RAW [->>+>+<<<]
+    #RAW >>>[-<<<+>>>]<<<
+    #RAW >>
+    #USE eq0.bf
+    #RAW <
+    #USE or.exbf
+    #USE not.exbf
+END
+#RAW <[-]<
+#USE eq0.bf

@@ -51,11 +51,17 @@ class BrainfuckCompiler:
                 bf_code.append("]")
 
             else:
-                cmd, filename = cmd.split(maxsplit=1)
+                cmd, rest = cmd.split(maxsplit=1)
 
-                assert cmd.upper() == '#USE'
-                filename      = os.path.join(self.filedirname, filename)
-                bf_code.append(BrainfuckCompiler(filename).get())
+                if cmd.upper() == '#USE': # use file as subroutine
+                    filename      = os.path.join(self.filedirname, rest.strip())
+                    bf_code.append(BrainfuckCompiler(filename).get())
+
+                elif cmd.upper() == "#RAW": # append raw code
+                    bf_code.append(rest.strip())
+
+                else:
+                    colors.error_log("error: command %s not found." % (cmd.upper()), 1)
 
         return "".join(bf_code)
 

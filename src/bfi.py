@@ -156,8 +156,9 @@ class BrainfuckInterpreter:
 if __name__ == "__main__":
     argv_list = json.loads(json.dumps(sys.argv))
     if len(argv_list) not in [2, 3]:
-        colors.error_log("usage: python3 \"%s\" <file.bf>" % sys.argv[0], 1)
-        colors.error_log("usage: python3 \"%s\" <file.bf> \"[initialized_memory]\" " % sys.argv[0], 1)
+        line1 = "usage: python3 \"%s\" <file.bf>" % sys.argv[0]
+        line2 = "       python3 \"%s\" <file.bf> \"{initialized_memory}\" " % sys.argv[0]
+        colors.error_log(line1 + "\n" + line2, 1)
 
     # get initialized_memory
     if len(argv_list) == 3:
