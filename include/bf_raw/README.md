@@ -20,6 +20,14 @@ We promise that any complete program must guarantee the preservation of the poin
 > >
 > > {a, 0, *} => {a, a, 0}
 
+## div.exbf
+
+> {a, b, \*, \*, \*, \*, \*, \*, \*, \*, \*} => {a/b, a%b, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+
+Before calling `div.exbf`, you need to guarantee yourself that `b != 0`.
+
+ `div.exbf` uses subroutine `swap.bf` and `leq.exbf`.
+
 ## eq.exbf
 
 > {a, b, \*, \*} => {[a == b], 0, 0, 0}
@@ -70,3 +78,6 @@ We promise that any complete program must guarantee the preservation of the poin
 
 > {a, b} => {a-b, 0}
 
+## swap.bf
+
+> {a, b, \*} => {b, a, 0}
