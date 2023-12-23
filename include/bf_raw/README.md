@@ -1,12 +1,18 @@
 # `bf_raw` manual
 
-We promise that any complete program must guarantee the preservation of the pointer positions before and after execution. `bf_raw` is the most fundamental type of `brainfuck` subroutine. It implements basic functionalities of byte-level arithmetic (addition, subtraction, multiplication, division) and logic (AND, OR, NOT). **All arithmetic operations are performed modulo 256**.
+We promise that any complete program must guarantee the **preservation** of the pointer positions before and after execution. `bf_raw` is the most fundamental type of `brainfuck` subroutine. It implements basic functionalities of byte-level arithmetic (addition, subtraction, multiplication, division) and logic (AND, OR, NOT). **All arithmetic operations are performed modulo 256**.
 
 ## add.bf
 
 > {a, b} => {a+b, 0}
 
 **Regarding the notation interpretation:** `{a, b}` denotes that prior to program execution, the pointer points to the location containing the value `a`. The program guarantees that no modifications will be made to any position preceding `a`. After program execution, the value at the original  `a` position changes to `a+b`, and the value at the original  `b` position is set to zero.
+
+## and.exbf
+
+> {a, b, \*, \*} => {a\*b, 0, 0, 0}
+
+`and.exbf` is an alias for `mul.exbf`.
 
 ## clr.bf
 
