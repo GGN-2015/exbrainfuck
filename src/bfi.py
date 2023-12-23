@@ -1,6 +1,7 @@
 # optimized brainfuck interpreter
 import sys
 import json
+import time
 from bfc import BrainfuckCompiler
 import colors
 
@@ -88,6 +89,7 @@ class BrainfuckInterpreter:
         self.memory         = {}
         self.pointer        = 0 # memory pointer to use
         self.program_pos    = 0
+        self.instr_cnt      = 0
     
     def __add(self, val: int): # add or sub
         self.__touch_memoty(self.pointer)
@@ -105,40 +107,49 @@ class BrainfuckInterpreter:
         return {x: dic[x] for x in dic}
 
     def run(self):
+        self.instr_cnt   = 0 # count the number of instruction used
         self.program_pos = 0
         self.pointer     = 0
         self.memory      = self.__deep_copy(self.initial_memory) # deep copy
         while True:
             if self.program_pos >= len(self.optimized_code): # normally terminated
-                return (self.memory, self.pointer)
+                return (self.memory, self.pointer, self.instr_cnt)
             cmd = self.optimized_code[self.program_pos]
 
             if cmd[0] == '+': # deal with add instruction
                 self.__add(int(cmd))
                 self.program_pos += 1
+                self.instr_cnt   += int(cmd) % 256
 
             if cmd[0] == '-': # deal with sub instruction
                 self.__add(int(cmd))
                 self.program_pos += 1
+                self.instr_cnt   += (-int(cmd)) % 256
 
             if cmd[0] == '<': # move pointer left
                 self.pointer -= int(cmd[1:])
                 self.program_pos += 1
+                self.instr_cnt   += int(cmd[1:])
 
             if cmd[0] == '>': # move pointer right
                 self.pointer += int(cmd[1:])
                 self.program_pos += 1
+                self.instr_cnt   += int(cmd[1:])
 
             if cmd == ',': # input char
-                self.__set(ord(sys.stdin.read(1))) # mod 256 ASCII
+                self.__set(ord(sys.stdin.read(1)) % 256) # mod 256 ASCII
                 self.program_pos += 1
+                self.instr_cnt   += 1
 
             if cmd == '.': # output char
                 print(chr(self.__get()), end="", flush=True)
                 self.program_pos += 1
+                self.instr_cnt   += 1
 
             if cmd == '[': # while loop
                 val = self.__get()
+                self.instr_cnt += 1
+
                 if val == 0:
                     self.program_pos = self.match_position[self.program_pos] + 1
                 else:
@@ -146,6 +157,8 @@ class BrainfuckInterpreter:
 
             if cmd == ']': # while loop end
                 val = self.__get()
+                self.instr_cnt += 1
+                
                 if val != 0:
                     self.program_pos = self.match_position[self.program_pos]
                 else:
@@ -170,9 +183,11 @@ if __name__ == "__main__":
     else:
         initialized_memory = {}
 
-    file_bf               = str(argv_list[1])
-    brainfuck_interpreter = BrainfuckInterpreter(file_bf, initial_memory=initialized_memory)
-    final_memory, ptr     = brainfuck_interpreter.run()
+    file_bf                      = str(argv_list[1])
+    brainfuck_interpreter        = BrainfuckInterpreter(file_bf, initial_memory=initialized_memory)
+    begin_time                   = time.time()
+    final_memory, ptr, instr_cnt = brainfuck_interpreter.run()
+    end_time                     = time.time()
 
-    colors.info_log("done.")
+    colors.info_log("done. instr_cnt = %d, time_cost = %.2f" % (instr_cnt, end_time - begin_time))
     colors.info_log("%s ptr = %d" % (str(final_memory), ptr))

@@ -1,3 +1,6 @@
+#RAW >[-]>[-]>[-]>[-]>[-]>[-]>[-]>[-]>[-]>[-]>[-]>[-]>[-]
+#RAW <<<<<<<<<<<<<
+
 #USE ../bf_raw/copy.bf
 #RAW >
 #USE ../bf_raw/eq0.bf
@@ -36,3 +39,4 @@ REP
     #USE ../bf_raw/eq.exbf
     #USE ../bf_raw/not.exbf   ; top() != 10
 END
+#RAW <[-]

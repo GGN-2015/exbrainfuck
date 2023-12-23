@@ -4,9 +4,14 @@ In `bf_io`, you can call basic subroutines defined in `bf_raw`, which provides c
 
 ## puti.exbf
 
-> {a, \*, \*, \*, \*, \*, \*, \*, \*, \*, \*, \*, \*, \*} => {a, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+> {a, \*, \*, \*, \*, \*, \*, \*, \*, \*, \*, \*, \*, \*} => {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 >
 > and output the decimal format of `a`.
 
-`puti.exbf` uses subroutines `bf_raw::div.exbf` and `bf_raw::copy.bf`.
+`puti.exbf` uses subroutines `bf_raw::copy.bf`，`bf_raw::eq0.bf`，`bf_raw::div.exbf`，`bf_raw::swap.bf`，`bf_raw::eq.exbf`，`bf_raw::not.exbf`，`bf_raw::add.bf`.
 
+## endl.bf
+
+> {\*} => {0}
+>
+> and output an `\n` onto the terminal.
