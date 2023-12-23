@@ -1,0 +1,38 @@
+#USE ../bf_raw/copy.bf
+#RAW >
+#USE ../bf_raw/eq0.bf
+REP
+    #RAW [-]
+    #RAW ++++++++++ ++++++++++ ++++++++++ ++++++++++ ++++++++. ; output chr(48)
+    #RAW [-]
+END
+
+#RAW < [->+<]
+#RAW ++++++++++ ; push(10)
+#RAW >          ; push(a)
+
+REP                           ; while a != 0:
+    #RAW >[-] ++++++++++ <    ;     b = 10
+    #USE ../bf_raw/div.exbf   ;     a, b = a/b, a%b
+    #USE ../bf_raw/swap.bf    ;     a, b = b, a
+    #RAW >
+END
+#RAW <
+
+#USE ../bf_raw/copy.bf
+#RAW >>[-] ++++++++++ <
+#USE ../bf_raw/eq.exbf
+#USE ../bf_raw/not.exbf   ; while top() != 10
+REP
+    #RAW [-]
+    #RAW ++++++++++ ++++++++++ ++++++++++ ++++++++++ ++++++++ ; 48
+    #RAW <
+    #USE ../bf_raw/add.bf ; top + 48
+    #RAW .[-]             ; output chr(top + 48)
+    #RAW <
+
+    #USE ../bf_raw/copy.bf
+    #RAW >>[-] ++++++++++ <
+    #USE ../bf_raw/eq.exbf
+    #USE ../bf_raw/not.exbf   ; top() != 10
+END

@@ -134,7 +134,7 @@ class BrainfuckInterpreter:
                 self.program_pos += 1
 
             if cmd == '.': # output char
-                sys.stdout.write(chr(self.__get()))
+                print(chr(self.__get()), end="", flush=True)
                 self.program_pos += 1
 
             if cmd == '[': # while loop
