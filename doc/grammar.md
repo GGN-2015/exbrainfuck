@@ -4,7 +4,7 @@
 
 ## Quick Start
 
-Here is an example program. The following program will output `hi!\n` to the screen after it finishes running:
+Here is an example program. The following program will output `hi!\n` to the screen:
 
 ```exbf
 #RAW [-]
